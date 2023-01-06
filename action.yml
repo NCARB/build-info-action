@@ -7,7 +7,7 @@ outputs:
     value: ${{ steps.build-info-generator.outputs.build-id }}
   version:
     description: "the sha of the commit (first 8)"
-    value: ${{ steps.build-info-generator.outputs.sha }}    
+    value: ${{ steps.build-info-generator.outputs.version }}    
 runs:
   using: "composite"
   steps:
