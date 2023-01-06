@@ -16,7 +16,7 @@ runs:
         short-length: 8
     - name: Get Time
       id: time
-      uses: nanzm/get-time-action@v1.1
+      uses: boredland/get-time-action@2.0.0
       with:
         timeZone: 0
         format: 'YYYYMMDDHHmmss'
