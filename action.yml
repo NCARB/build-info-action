@@ -1,0 +1,27 @@
+name: 'Generate Build Info'
+description: 'Generates Build Info'
+inputs: {}
+outputs:
+  build-id:
+    description: "Sortable build id for docker images: format <branch>-<sha1>-<timestamp>"
+    value: ${{ steps.build-info-generator.outputs.build-id }}
+  version:
+    description: "the sha of the commit (first 8)"
+    value: ${{ steps.build-info-generator.outputs.sha }}    
+runs:
+  using: "composite"
+  steps:
+    - uses: rlespinasse/github-slug-action@v4
+      with:
+        short-length: 8
+    - name: Get Time
+      id: time
+      uses: nanzm/get-time-action@v1.1
+      with:
+        timeZone: 0
+        format: 'YYYYMMDDHHmmss'
+    - id: build-info-generator
+      run: |
+        echo "build-id=${{ env.GITHUB_REF_SLUG }}-${{ env.GITHUB_SHA_SHORT }}-${{ steps.time.outputs.time }}" >> $GITHUB_OUTPUT
+        echo "version=${{ env.GITHUB_SHA_SHORT }}" >> $GITHUB_OUTPUT
+      shell: bash
